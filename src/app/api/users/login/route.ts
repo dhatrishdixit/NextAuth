@@ -22,16 +22,21 @@ export async function POST(request:NextRequest){
             status:401
         })
 
-        const tokenData = {
-            id:user._id
-        };
+        // const tokenData = {
+        //     id:user._id
+        // };
+       
         if(!process.env.TOKEN_SECRET) return NextResponse.json({
             error: "Token secret not found",
             status:500
         });
+        const tokenData = {
+            _id:user._id,
+        };
         const token = jwt.sign(tokenData,process.env.TOKEN_SECRET,{
             expiresIn: "1d"
         });
+      
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
@@ -45,6 +50,7 @@ export async function POST(request:NextRequest){
     catch (error:any) {
         return NextResponse.json({
             error: error.message,
+        },{
             status:500
         })
     }
