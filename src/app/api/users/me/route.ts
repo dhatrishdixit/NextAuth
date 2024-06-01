@@ -8,7 +8,7 @@ connectDB();
 export async function GET(request:NextRequest){
     try {
         const userId:any = getDataFromToken(request);
-        const user= await User.findById(userId);
+        const user= await User.findById(userId).select("-password");
  
         return NextResponse.json({
             user,
